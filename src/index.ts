@@ -20,11 +20,13 @@ global.__basedir = __dirname;
 // console.log('Robin', process.env)
 const Port : any = process.env.PORT ;
 const uri : any = process.env.MONGODB_URI;
+const secret: any = process.env.SECRET;
+// console.log('Robin', secret);
 const server = fastify({
 	logger: pino({ level: 'info' })
 });
 
-server.register(fastifyJwt, { secret: 'hope2u.top'} );
+server.register(fastifyJwt, { secret } );
 server.register(cors, {});
 server.register(fastifyMutipart);
 // server.register(fastifyStatic, {
