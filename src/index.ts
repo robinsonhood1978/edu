@@ -11,6 +11,7 @@ import db from './config/index';
 import userRoutes from './routes/userRoute';
 import profileRoutes from './routes/profileRoute';
 import evaluationRoutes from './routes/evaluationRoute';
+import courseRoutes from './routes/courseRoute';
 
 declare global {
     var __basedir: string;
@@ -58,6 +59,7 @@ server.register(db, { uri });
 server.register(userRoutes);
 server.register(profileRoutes);
 server.register(evaluationRoutes);
+server.register(courseRoutes);
 
 server.listen({port: Port, host: '0.0.0.0'}, (err) => {
 	if (err) {

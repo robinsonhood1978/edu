@@ -33,6 +33,10 @@ export interface ProfileAttrs {
     personal_testimony: string;
     ideas_needs: string;
 	recommendation_letter: string;
+	status: string;
+	viewed_bible: string;
+	agreed_pastor: string;
+	interview_marks: Array<string>;
 }
 
 export interface ProfileModel extends Model<ProfileDocument> {
@@ -72,6 +76,10 @@ export interface ProfileDocument extends Document {
     personal_testimony: string;
     ideas_needs: string;
 	recommendation_letter: string;
+	status: string;
+	viewed_bible: string;
+	agreed_pastor: string;
+	interview_marks: Array<string>;
 	createdAt: string;
 	updatedAt: string;
 }
@@ -196,6 +204,18 @@ export const profileSchema: Schema = new Schema(
         },
 		recommendation_letter: {
 			type: String,
+		},
+		status: {
+			type: String,
+		},
+		viewed_bible: {
+			type: String,
+		},
+		agreed_pastor: {
+			type: String,
+		},
+		interview_marks: {
+			type: Array<string>,
 		},
 	},
 	{

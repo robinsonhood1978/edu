@@ -20,6 +20,27 @@ interface userParams {
 const nodemailer = require("nodemailer");
 
 const UserRoute: FastifyPluginAsync = async (server: FastifyInstance, options: FastifyPluginOptions) => {
+	server.post<{ Body: UserAttrs }>('/updateAbility', {
+		onRequest: [server.authenticate]
+	  }, async (request, reply) => {
+		try {
+			// const u: any = request.user;
+			const { User } = server.db.models;
+			const {email, ability} = request.body;
+
+			// let user = await User.findOne({email: u.email});
+			// console.log(user)
+
+			await User.updateOne({email}, {
+				ability
+			  });
+
+			return reply.code(201).send({code:0});
+		} catch (error) {
+			request.log.error(error);
+			return reply.send(500);
+		}
+	});
 	server.post<{ Body: UserAttrs }>('/pwd', {
 		onRequest: [server.authenticate]
 	  }, async (request, reply) => {
@@ -176,7 +197,18 @@ const UserRoute: FastifyPluginAsync = async (server: FastifyInstance, options: F
                .update(password)
                .digest('hex');
 
-			const user = await User.addOne({...request.body, password:hash});
+			const ability = [
+				{
+				  action: 'read',
+				  subject: 'Client',
+				},
+				{
+				  action: 'read',
+				  subject: 'Auth',
+				},
+			  ];
+
+			const user = await User.addOne({...request.body, password:hash, ability});
 			await user.save();
 			// console.log('robin',user);
 			const token = server.jwt.sign({id: user._id, email});
@@ -205,7 +237,7 @@ const UserRoute: FastifyPluginAsync = async (server: FastifyInstance, options: F
 			if (user) {
 				// check password
 				if (hash === user.password) {
-					reply.code(200).send({ token });
+					reply.code(200).send({ token, ability: user.ability });
 				}
 				// password mismatch
 				else {

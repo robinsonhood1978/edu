@@ -6,6 +6,7 @@ export interface UserAttrs {
 	channel: string;
 	lang: string;
 	code: string;
+	ability: { action: string; subject: string; }[];
 }
 
 export interface UserModel extends Model<UserDocument> {
@@ -20,6 +21,7 @@ export interface UserDocument extends Document {
 	code: string;
 	createdAt: string;
 	updatedAt: string;
+	ability: { action: string; subject: string; }[];
 }
 
 export const userSchema: Schema = new Schema(
@@ -42,6 +44,9 @@ export const userSchema: Schema = new Schema(
 		},
 		code: {
 			type: String
+		},
+		ability: {
+			type: [Schema.Types.Mixed]
 		}
 	},
 	{

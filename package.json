@@ -4,9 +4,10 @@
   "description": "A fastify and typescript boilerplate",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf build/",
+    "copy-res": "copyfiles -u 2 build/public/* public",
+    "clean": "rimraf build/config build/routes build/index.js",
     "copy-files": "copyfiles public/* build",
-    "build": "yarn clean && yarn copy-files && tsc -w",
+    "build": "yarn copy-res && yarn clean && yarn copy-files && tsc -w",
     "start": "node build/index.js",
     "dev": "nodemon build/index.js"
   },

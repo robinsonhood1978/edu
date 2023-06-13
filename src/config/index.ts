@@ -5,11 +5,13 @@ import mongoose from 'mongoose';
 import { User, UserModel } from './models/userModel';
 import { Profile, ProfileModel } from './models/profileModel';
 import { Evaluation, EvaluationModel } from './models/evaluationModel';
+import { Course, CourseModel } from './models/courseModel';
 
 export interface Models {
 	User: UserModel;
 	Profile: ProfileModel;
 	Evaluation: EvaluationModel;
+	Course: CourseModel;
 }
 
 export interface Db {
@@ -36,7 +38,7 @@ const ConnectDB: FastifyPluginAsync<MyPluginOptions> = async (
 
 		const db = await mongoose.connect(options.uri);
 
-		const models: Models = { User, Profile, Evaluation };
+		const models: Models = { User, Profile, Evaluation, Course };
 
 		fastify.decorate('db', { models });
 	} catch (error) {

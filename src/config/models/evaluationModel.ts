@@ -1,6 +1,7 @@
 import { Schema, Document, model, Model } from 'mongoose';
 
 export interface EvaluationAttrs {
+	_id: any;
 	email: string;
     user_id: string;
 	courses: Array<string>;
@@ -10,6 +11,10 @@ export interface EvaluationAttrs {
     interactive_times: string;
     talking_times: string;
     absence_times: string;
+    answer: Array<string>;
+    score: number;
+    summary: string;
+    
 }
 
 export interface EvaluationModel extends Model<EvaluationDocument> {
@@ -26,6 +31,9 @@ export interface EvaluationDocument extends Document {
     interactive_times: string;
     talking_times: string;
     absence_times: string;
+    summary: string;
+    answer: Array<string>;
+    score: number;
 	createdAt: string;
 	updatedAt: string;
 }
@@ -48,33 +56,36 @@ export const evaluationSchema: Schema = new Schema(
         video_times: {
             type: {title: String},
             _id: false,
-			required: true
         },
         book_times: {
             type: {title: String},
             _id: false,
-			required: true
         },
         weekreport_times: {
             type: {title: String},
             _id: false,
-			required: true
         },
         interactive_times: {
             type: {title: String},
             _id: false,
-			required: true
         },
         talking_times: {
             type: {title: String},
             _id: false,
-			required: true
         },
         absence_times: {
             type: {title: String},
             _id: false,
-			required: true
         },
+        summary: {
+			type: String
+		},
+        answer: {
+			type: Array<string>,
+		},
+        score: {
+			type: Number
+		},
 	},
 	{
 		timestamps: true
